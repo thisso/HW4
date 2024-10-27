@@ -17,7 +17,7 @@ public class Card {
         }
     }
 
-    @Override //overiding default toString
+    @Override //overiding default toString of class
     public String toString() {
         return rank + suit;
     }
