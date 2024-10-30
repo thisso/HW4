@@ -47,7 +47,7 @@ public class BlackjackSolitaire {
         System.out.println();
         // Row 1
         for (int i = 0; i < 5; i++) {
-            System.out.print(formatCell(i) + "\t");
+            System.out.print(formatCell(i) + "\t"); //adding tab for formatting
         }
         System.out.println();
 
@@ -76,19 +76,21 @@ public class BlackjackSolitaire {
         if (grid[index] == null) {
             return String.valueOf(index + 1);  // Empty cel shows position number
         } else {
-            return grid[index].toString();     // Filled cell shows card
+            return grid[index].toString();     // Filled cell show card
         }
     }
 
+    //exception catching with try/catch
     private int getValidPosition(Scanner scanner) {
         while (true) {
-            System.out.print("Enter position (1-20): ");
+            System.out.print("Enter position (1-20), positions 17 and above are discards: ");
             try {
-                int position = Integer.parseInt(scanner.nextLine());
+                int position = Integer.parseInt(scanner.nextLine()); //convert first arg to string to check for valid int input
                 if (position < 1 || position > 20) {
                     System.out.println("Invalid position! Please enter a number between 1 and 20.");
                     continue;
                 }
+                //catching occupied space error
                 if (grid[position - 1] != null) {
                     System.out.println("Position already occupied, choose another position.");
                     continue;
@@ -122,7 +124,7 @@ public class BlackjackSolitaire {
 
         return totalScore;
     }
-
+    //calculate the score, handling aces specially
     private int scoreHand(int... positions) {
         List<Card> hand = new ArrayList<>();
         for (int pos : positions) {
@@ -144,7 +146,7 @@ public class BlackjackSolitaire {
             }
         }
 
-        // Add aces
+        // Add aces as either 11 or 1 depending on total score
         for (int i = 0; i < aces; i++) {
             if (sum + 11 <= 21) {
                 sum += 11;
@@ -153,7 +155,7 @@ public class BlackjackSolitaire {
             }
         }
 
-        // Return points based on the hand value
+        // Scoring based on hand values
         if (sum > 21) return 0;  // Bust
         if (hand.size() == 2 && sum == 21) return 10;  // Blackjack
         if (sum == 21) return 7;  // 21 with 3+ cards
