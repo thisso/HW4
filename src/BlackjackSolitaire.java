@@ -18,7 +18,7 @@ public class BlackjackSolitaire {
     public void play() {
         Scanner scanner = new Scanner(System.in);
         int filledPositions = 0;
-
+        //filling scoring posiutions with cards until cards run out for positions are filled
         while (filledPositions < SCORING_POSITIONS) {
             Card currentCard = deck.drawCard();
             if (currentCard == null) {
@@ -74,7 +74,7 @@ public class BlackjackSolitaire {
 
     private String formatCell(int index) {
         if (grid[index] == null) {
-            return String.valueOf(index + 1);  // Empty cell shows position number
+            return String.valueOf(index + 1);  // Empty cel shows position number
         } else {
             return grid[index].toString();     // Filled cell shows card
         }
@@ -135,7 +135,8 @@ public class BlackjackSolitaire {
         int aces = 0;
 
         // Count non-ace cards first
-        for (Card card : hand) {
+        for (int i = 0; i < hand.size(); i++) {
+            Card card = hand.get(i);
             if (card.getValue() == 11) {
                 aces++;
             } else {
@@ -152,7 +153,7 @@ public class BlackjackSolitaire {
             }
         }
 
-        // Return points based on hand value
+        // Return points based on the hand value
         if (sum > 21) return 0;  // Bust
         if (hand.size() == 2 && sum == 21) return 10;  // Blackjack
         if (sum == 21) return 7;  // 21 with 3+ cards
