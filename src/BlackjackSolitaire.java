@@ -6,8 +6,8 @@ public class BlackjackSolitaire {
     private final Card[] grid;
     private final Deck deck;
     private int discardsRemaining;
-    private static final int GRID_SIZE = 20;
-    private static final int SCORING_POSITIONS = 16;
+    private static final int GRID_SIZE = 20; //16 scoring + 4 discards
+    private static final int SCORING_POSITIONS = 16; //represent the number of positions that count for scoring
 
     public BlackjackSolitaire() {
         grid = new Card[GRID_SIZE];
@@ -73,7 +73,11 @@ public class BlackjackSolitaire {
     }
 
     private String formatCell(int index) {
-        return grid[index] == null ? String.valueOf(index + 1) : grid[index].toString();
+        if (grid[index] == null) {
+            return String.valueOf(index + 1);  // Empty cell shows position number
+        } else {
+            return grid[index].toString();     // Filled cell shows card
+        }
     }
 
     private int getValidPosition(Scanner scanner) {
@@ -86,16 +90,16 @@ public class BlackjackSolitaire {
                     continue;
                 }
                 if (grid[position - 1] != null) {
-                    System.out.println("Position already occupied! Choose another position.");
+                    System.out.println("Position already occupied, choose another position.");
                     continue;
                 }
                 if (position >= 17 && discardsRemaining <= 0) {
-                    System.out.println("No discards remaining! Choose a scoring position.");
+                    System.out.println("No discards remaining, choose a scoring position.");
                     continue;
                 }
                 return position;
             } catch (NumberFormatException e) {
-                System.out.println("Invalid input! Please enter a number.");
+                System.out.println("Invalid input, please enter a number.");
             }
         }
     }
@@ -139,7 +143,7 @@ public class BlackjackSolitaire {
             }
         }
 
-        // Add aces optimally
+        // Add aces
         for (int i = 0; i < aces; i++) {
             if (sum + 11 <= 21) {
                 sum += 11;
